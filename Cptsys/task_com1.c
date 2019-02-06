@@ -25,8 +25,8 @@
 
 /*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 COM2 and insulation detection
-		@param:		None
-		@retval:	None
+	@param:		None
+	@retval:	None
 -----------------------------------------------------------------*/
 STATUS Task_com1(void)
 {

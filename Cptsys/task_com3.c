@@ -21,10 +21,11 @@
 #include "task_com3.h"
 #include ".\reg\partreg.h"
 
-/* 	@desc: communciation task bewteen PC104 COM2 and Motor Control Module
+/*------------------------------------------------------------------------
+ 	@desc: communciation task bewteen PC104 COM2 and Motor Control Module
 	@param:		None
 	@retval:	None
------------------------------------------------------------------*/
+--------------------------------------------------------------------------*/
 STATUS Task_com3(void)
 {
 	int hCom, i;
