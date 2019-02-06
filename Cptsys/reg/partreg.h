@@ -19,62 +19,59 @@
 #include "msgQLib.h"
 
 /* ----------------------- Defines ------------------------------------------*/
-#define INPUT_REG_ADDR 		0
-#define INPUT_REG_LEN 		600
-#define HOLD_REG_ADDR 		1000
-#define HOLD_REG_LEN 			901
-#define EVENT_HANDLE_LEN  2 
-#define FUNCPARA_LEN			80
+#define INPUT_REG_ADDR 0
+#define INPUT_REG_LEN 600
+#define HOLD_REG_ADDR 1000
+#define HOLD_REG_LEN 901
+#define EVENT_HANDLE_LEN 2
+#define FUNCPARA_LEN 80
 
 /* ------------------Event handle result define -----------------------------*/
 typedef enum
 {
-	EvOK = 0 ,
-	EvFAIL = 1 ,
-	EvVALID = 2 
-}		eResult ;
+	EvOK = 0,
+	EvFAIL = 1,
+	EvVALID = 2
+} eResult;
 
-typedef int( *pxEventCallback)(USHORT usAddr, USHORT usVal) ;
+typedef int (*pxEventCallback)(USHORT usAddr, USHORT usVal);
 
-typedef struct tagpxEventFunction 
+typedef struct tagpxEventFunction
 {
-	USHORT 						usStartAdr ;
-	USHORT 						usEndAdr ;
-	pxEventCallback  	pxHandler ;
-} pxEventFunction ;
+	USHORT usStartAdr;
+	USHORT usEndAdr;
+	pxEventCallback pxHandler;
+} pxEventFunction;
 
-typedef struct 
+typedef struct
 {
-	UCHAR		ucChanged ;				/*是否修改标志*/
-	UCHAR		ucModule ;				/*变量所在模块号*/
-	USHORT 	usAddress ; 			/*变量对应的模块地址*/
-	UCHAR		ucType;						/*通信协议类型 0 - Modbus  1 - DCDC */
-}		paramDef ;
+	UCHAR ucChanged;  /*是否修改标志*/
+	UCHAR ucModule;   /*变量所在模块号*/
+	USHORT usAddress; /*变量对应的模块地址*/
+	UCHAR ucType;	 /*通信协议类型 0 - Modbus  1 - DCDC */
+} paramDef;
 
-extern MSG_Q_ID  	regMesQ ;
-extern paramDef 	ParamsDef[] ;
+extern MSG_Q_ID regMesQ;
+extern paramDef ParamsDef[];
 
 /* ----------------------- function-----------------------------------------*/
-void		InitRegisterFunction() ;
+void InitRegisterFunction();
 
-BOOL		IsValidInputAddr(USHORT usAddr, USHORT usLen) ;
-USHORT 	GetInputReg(USHORT usAddr) ;
-void 		SetInputReg(USHORT usAddr, USHORT val) ;
-void 		SetInputRegInc(USHORT usAddr) ;
+BOOL IsValidInputAddr(USHORT usAddr, USHORT usLen);
+USHORT GetInputReg(USHORT usAddr);
+void SetInputReg(USHORT usAddr, USHORT val);
+void SetInputRegInc(USHORT usAddr);
 
+BOOL IsValidHoldingAddr(USHORT usAddr, USHORT usLen);
+USHORT GetHoldingReg(USHORT usAddr);
+void SetHoldingReg(USHORT usAddr, USHORT val);
 
-BOOL		IsValidHoldingAddr(USHORT usAddr, USHORT usLen) ;
-USHORT 	GetHoldingReg(USHORT usAddr) ;
-void 		SetHoldingReg(USHORT usAddr, USHORT val) ;
+void ExecuteEventFunction(USHORT usAddr, USHORT usVal);
+int Reg1Handler(USHORT usAddr, USHORT usVal);
+int Reg2Handler(USHORT usAddr, USHORT usVal);
 
-
-void		ExecuteEventFunction(USHORT usAddr,USHORT usVal) ;
-int 		Reg1Handler(USHORT usAddr, USHORT usVal) ;
-int			Reg2Handler(USHORT usAddr, USHORT usVal) ;
-
-STATUS  MessageHandleTask( ) ;
-
+STATUS MessageHandleTask();
 
 /* ----------------------------------------------------------------------*/
-void 	OrganizeData(void) ;				/*整理数据  将获得的数据写入输入寄存器中*/
+void OrganizeData(void); /*整理数据  将获得的数据写入输入寄存器中*/
 #endif

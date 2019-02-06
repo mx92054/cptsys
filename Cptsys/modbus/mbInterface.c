@@ -36,144 +36,138 @@
 #include "..\reg\partreg.h"
 
 /* ----------------------- Defines ------------------------------------------*/
-#define PROG            _T("freemodbus")
+#define PROG _T("freemodbus")
 
-STATUS ModbusTask() ;
+STATUS ModbusTask();
 
 /* -------------------------------------------------------------------------*/
-STATUS  ModbusChain()
+STATUS ModbusChain()
 {
-	eMBErrorCode eResult ;
-	
-	eResult = eMBTCPInit(MB_TCP_PORT_USE_DEFAULT) ;
-	
-	if ( eResult != MB_ENOERR)
-		{
-			logMsg("ModbusChain: Socket Initiailze error(%d)", eResult,0,0,0,0,0) ;
-			return(ERROR) ;
-		}	
-		
-	eResult = eMBEnable() ;
-	
-	if ( eResult != MB_ENOERR)
-		{
-			logMsg("ModbusChain: Enable error(%d)", eResult,0,0,0,0,0) ;
-			return(ERROR) ;
-		}	
-		
-	taskSpawn("mbPoll", 110, 0, 2048, 
-						(FUNCPTR)ModbusTask, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) ;	
-		
-	return(OK) ;
-}
+	eMBErrorCode eResult;
 
+	eResult = eMBTCPInit(MB_TCP_PORT_USE_DEFAULT);
+
+	if (eResult != MB_ENOERR)
+	{
+		logMsg("ModbusChain: Socket Initiailze error(%d)", eResult, 0, 0, 0, 0, 0);
+		return (ERROR);
+	}
+
+	eResult = eMBEnable();
+
+	if (eResult != MB_ENOERR)
+	{
+		logMsg("ModbusChain: Enable error(%d)", eResult, 0, 0, 0, 0, 0);
+		return (ERROR);
+	}
+
+	taskSpawn("mbPoll", 110, 0, 2048,
+			  (FUNCPTR)ModbusTask, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+	return (OK);
+}
 
 /* -------------------------------------------------------------------------*/
 STATUS ModbusTask()
 {
-		FOREVER
-		{
-		    if( eMBPoll(  ) != MB_ENOERR )
-		        break;
-		    taskDelay(5) ;
-		}
-		
-		logMsg("ModbusTask: Modbus procotol chain exit.\n", 0,0,0,0,0,0) ;
-		return(ERROR) ;
-}
-
-
-/* -------------------------------------------------------------------------*/
-eMBErrorCode
-eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
-{
-  USHORT val ;
-  if ( !IsValidInputAddr(usAddress, usNRegs))
-  	return MB_ENOREG ;
-  	
-	while ( usNRegs > 0)
+	FOREVER
 	{
-		val = GetInputReg(usAddress++) ;
-		*pucRegBuffer++ = ( unsigned char )( val >> 8 );
-		*pucRegBuffer++ = ( unsigned char )( val & 0xFF );
-		usNRegs--;		
+		if (eMBPoll() != MB_ENOERR)
+			break;
+		taskDelay(5);
 	}
-	return MB_ENOERR ;
+
+	logMsg("ModbusTask: Modbus procotol chain exit.\n", 0, 0, 0, 0, 0, 0);
+	return (ERROR);
 }
 
 /* -------------------------------------------------------------------------*/
 eMBErrorCode
-eMBRegInputSetting( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
+eMBRegInputCB(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNRegs)
 {
-  USHORT val ;
-  
-  if ( !IsValidInputAddr(usAddress, usNRegs))
-  	return MB_ENOREG ;   
-  	 
-	while ( usNRegs > 0)
+	USHORT val;
+	if (!IsValidInputAddr(usAddress, usNRegs))
+		return MB_ENOREG;
+
+	while (usNRegs > 0)
+	{
+		val = GetInputReg(usAddress++);
+		*pucRegBuffer++ = (unsigned char)(val >> 8);
+		*pucRegBuffer++ = (unsigned char)(val & 0xFF);
+		usNRegs--;
+	}
+	return MB_ENOERR;
+}
+
+/* -------------------------------------------------------------------------*/
+eMBErrorCode
+eMBRegInputSetting(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNRegs)
+{
+	USHORT val;
+
+	if (!IsValidInputAddr(usAddress, usNRegs))
+		return MB_ENOREG;
+
+	while (usNRegs > 0)
+	{
+		val = *pucRegBuffer++ << 8;
+		val |= *pucRegBuffer++;
+		SetInputReg(usAddress++, val);
+		usNRegs--;
+	}
+
+	return MB_ENOERR;
+}
+
+/* -------------------------------------------------------------------------*/
+eMBErrorCode
+eMBRegHoldingCB(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode)
+{
+	USHORT val;
+
+	if (!IsValidHoldingAddr(usAddress, usNRegs))
+		return MB_ENOREG;
+
+	switch (eMode)
+	{
+	case MB_REG_READ:
+		while (usNRegs > 0)
 		{
-			val = *pucRegBuffer++ << 8 ;
-			val |= *pucRegBuffer++ ;
-			SetInputReg(usAddress++,val) ;
-			usNRegs--;		
+			val = GetHoldingReg(usAddress++);
+			*pucRegBuffer++ = (unsigned char)(val >> 8);
+			*pucRegBuffer++ = (unsigned char)(val & 0xFF);
+			usNRegs--;
 		}
-		
-	return MB_ENOERR ;    
+		break;
+	case MB_REG_WRITE:
+		while (usNRegs > 0)
+		{
+			val = *pucRegBuffer++ << 8;
+			val |= *pucRegBuffer++;
+			SetHoldingReg(usAddress++, val);
+			usNRegs--;
+		}
+		break;
+	}
+	return MB_ENOERR;
 }
 
 /* -------------------------------------------------------------------------*/
 eMBErrorCode
-eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
+eMBRegCoilsCB(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode)
 {
-    USHORT val ;
-    
-  	if ( !IsValidHoldingAddr(usAddress, usNRegs))
-  		return MB_ENOREG ;    
-    
-    switch ( eMode)
-    {
-    	case MB_REG_READ:
-				while ( usNRegs > 0)
-				{
-					val = GetHoldingReg(usAddress++) ;
-					*pucRegBuffer++ = ( unsigned char )( val >> 8 );
-					*pucRegBuffer++ = ( unsigned char )( val & 0xFF );
-					usNRegs--;		
-				}    		
-    		break ;
-    	case MB_REG_WRITE:
-				while ( usNRegs > 0)
-				{
-					val = *pucRegBuffer++ << 8 ;
-					val |= *pucRegBuffer++ ;
-					SetHoldingReg(usAddress++,val) ;
-					usNRegs--;		
-				}    		
-    		break ;
-    }
-    return MB_ENOERR ;
-}
-
-
-/* -------------------------------------------------------------------------*/
-eMBErrorCode
-eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegisterMode eMode )
-{
-    return MB_ENOREG;
+	return MB_ENOREG;
 }
 
 /* -------------------------------------------------------------------------*/
 eMBErrorCode
-eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
+eMBRegDiscreteCB(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNDiscrete)
 {
-    return MB_ENOREG;
+	return MB_ENOREG;
 }
-
 
 /* -------------------------------------------------------------------------*/
-void    vMBPortTimersDelay( USHORT usTimeOutMS )
+void vMBPortTimersDelay(USHORT usTimeOutMS)
 {
-	taskDelay(usTimeOutMS/10) ;
+	taskDelay(usTimeOutMS / 10);
 }
-
-
