@@ -10,7 +10,16 @@
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.Fi
+ * Lesser General Public License for more details.Fi*/
+#include "vxworks.h"
+#include <stdio.h>
+#include <string.h>
+#include "timers.h"
+#include "time.h"
+
+#include "serialTask.h"
+#include "task_com3.h"
+#include ".\reg\partreg.h"
 
 /*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 COM2 and Motor Control Module
