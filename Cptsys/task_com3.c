@@ -63,15 +63,6 @@ STATUS Task_com3(void)
 		taskDelay(10);
 	}
 
-	FOREVER
-	{
-		if (err = ReadHoldingRegister(hCom, 1, 0, 40, MOT_VAL_ADR))
-		{
-			SetInputReg(MOT_ERR_CODE_ADR, err);
-			SetInputRegInc(MOT_ERR_NUM_ADR) ;
-		}
-	}
-
 	return OK;
 }
 

@@ -16,13 +16,13 @@
 #ifndef __TASK_COM2__
 #define __TASK_COM2__
 
-#define BAUDRATE_COM2	  		38400
-#define DCDC1_ENABLE_ADR		1112
-#define	DCDC1_ADDRESS				0x61
-#define DCDC1_VAL_ADR				0
-#define DCDC1_ERR_CODE_ADR	502
-#define	DCDC1_ERR_NUM_ADR		522
+#define BAUDRATE_COM2 38400
+#define DCDC1_ENABLE_ADR 1112
+#define DCDC1_ADDRESS 0x61
+#define DCDC1_VAL_ADR 0
+#define DCDC1_ERR_CODE_ADR 502
+#define DCDC1_ERR_NUM_ADR 522
 
-STATUS  Task_com2(void) ;
+STATUS Task_com2(void);
 
 #endif
