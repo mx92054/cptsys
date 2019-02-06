@@ -24,56 +24,50 @@
 #include "task_com5.h"
 #include ".\reg\partreg.h"
 
-
 /*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 COM5 and MultiSerial Board
 		@param:		None
 		@retval:	None
 -----------------------------------------------------------------*/
- STATUS  Task_com5(void) 
- {
- 	int 		hCom,i;
- 	BOOL		err, adr ;
+STATUS Task_com5(void)
+{
+	int hCom, i;
+	BOOL err, adr;
 
-	if ( !xMBPortSerialInit(5, BAUDRATE_COM5, &hCom)) 
+	if (!xMBPortSerialInit(5, BAUDRATE_COM5, &hCom))
 	{
-		logMsg("Serial port 5 failure: Multiple Serial Board\n",0,0,0,0,0,0)	;	
-		return ERROR ;
-	}	
-	logMsg("Serial port 5 success:   Multiple Serial Board\n",0,0,0,0,0,0)	;	
-	
+		logMsg("Serial port 5 failure: Multiple Serial Board\n", 0, 0, 0, 0, 0, 0);
+		return ERROR;
+	}
+	logMsg("Serial port 5 success:   Multiple Serial Board\n", 0, 0, 0, 0, 0, 0);
+
 	FOREVER
 	{
-		if ( err = ReadHoldingRegister(hCom, 1, 0, 120, MUL_VAL_ADR) )
-			{
-				SetInputReg(MUL_ERR_CODE_ADR, err) ;
-				SetInputRegInc(MUL_ERR_NUM_ADR) ;
-			}	
-			
-		taskDelay(5)	;
-			
-		/*---------------write data---------------*/
-		for(i = 60; i < 80; i++)
-		{			
-			if ( ParamsDef[i].ucChanged )
-				{
-					adr = ParamsDef[i].usAddress ;
-					err = WriteHoldingRegister(hCom, 1, adr, 1000+i) ;
-					/*printf(" Com5 Modbus stat:%d, adr:%d, val:%d\n", n,adr,val) ;*/
-					if ( err == MB_ENOERR )
-						ParamsDef[i].ucChanged = 0 ;	
-				}
-		}	
- 		
-		taskDelay(10)	;	
-		
+		if (err = ReadHoldingRegister(hCom, 1, 0, 120, MUL_VAL_ADR))
+		{
+			SetInputReg(MUL_ERR_CODE_ADR, err);
+			SetInputRegInc(MUL_ERR_NUM_ADR);
+		}
 
+		taskDelay(5);
+
+		/*---------------write data---------------*/
+		for (i = 60; i < 80; i++)
+		{
+			if (ParamsDef[i].ucChanged)
+			{
+				adr = ParamsDef[i].usAddress;
+				err = WriteHoldingRegister(hCom, 1, adr, 1000 + i);
+				/*printf(" Com5 Modbus stat:%d, adr:%d, val:%d\n", n,adr,val) ;*/
+				if (err == MB_ENOERR)
+					ParamsDef[i].ucChanged = 0;
+			}
+		}
+
+		taskDelay(10);
 	}
- 	
- 	return OK; 	
- }
- 
- 
- 
- 
- /*--------------end of file-------------------------------------*/
+
+	return OK;
+}
+
+/*--------------end of file-------------------------------------*/

@@ -23,41 +23,39 @@
 #include "task_com1.h"
 #include ".\reg\partreg.h"
 
-
 /*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 COM2 and insulation detection
 		@param:		None
 		@retval:	None
 -----------------------------------------------------------------*/
-STATUS  Task_com1(void) 
-	{
-	int 		hCom;
-	BOOL		err ;
-	USHORT	usEnable;
+STATUS Task_com1(void)
+{
+	int hCom;
+	BOOL err;
+	USHORT usEnable;
 
-	if ( !xMBPortSerialInit(1, BAUDRATE_COM1, &hCom)) 
+	if (!xMBPortSerialInit(1, BAUDRATE_COM1, &hCom))
 	{
-		logMsg("Serial port 1 failure: Insulation detection\n",0,0,0,0,0,0)	;	
-		return ERROR ;
-	}	
-	logMsg("Serial port 1 success: Insulation detection\n",0,0,0,0,0,0)	;	
+		logMsg("Serial port 1 failure: Insulation detection\n", 0, 0, 0, 0, 0, 0);
+		return ERROR;
+	}
+	logMsg("Serial port 1 success: Insulation detection\n", 0, 0, 0, 0, 0, 0);
 
 	FOREVER
 	{
-		usEnable = GetHoldingReg(INS_ENABLE_ADR) ;
-		if ( usEnable != 0 )
+		usEnable = GetHoldingReg(INS_ENABLE_ADR);
+		if (usEnable != 0)
+		{
+			if (err = readInsulation(hCom, INS_VAL_ADR))
 			{
-				if ( err = readInsulation(hCom,INS_VAL_ADR) )
-					{
-						SetInputReg(INS_ERR_CODE_ADR, err) ;
-						SetInputRegInc(INS_ERR_NUM_ADR) ;
-					}						
+				SetInputReg(INS_ERR_CODE_ADR, err);
+				SetInputRegInc(INS_ERR_NUM_ADR);
 			}
-		taskDelay(60)	;	
+		}
+		taskDelay(60);
 	}
 
-	return OK; 	
-	}
-	 
- 
- /*--------------end of file-------------------------------------*/
+	return OK;
+}
+
+/*--------------end of file-------------------------------------*/

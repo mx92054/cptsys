@@ -1,0 +1,22 @@
+{
+  "name": "vxworks",
+  "version": "1.0.0",
+  "description": "vxwork project format dewfine",
+  "main": "index.js",
+  "scripts": {
+    "test": "console"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mx92054/cptsys.git"
+  },
+  "keywords": [
+    "cptsys"
+  ],
+  "author": "chenming",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mx92054/cptsys/issues"
+  },
+  "homepage": "https://github.com/mx92054/cptsys#readme"
+}

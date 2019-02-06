@@ -26,47 +26,53 @@
 		@param:		None
 		@retval:	None
 -----------------------------------------------------------------*/
- STATUS  Task_com3(void) 
- {
- 	int 		hCom,i;
- 	BOOL		err, adr ;
+STATUS Task_com3(void)
+{
+	int hCom, i;
+	BOOL err, adr;
 
-	if ( !xMBPortSerialInit(3, BAUDRATE_COM3, &hCom)) 
+	if (!xMBPortSerialInit(3, BAUDRATE_COM3, &hCom))
 	{
-		logMsg("Serial port 3 failure: Motor Control Module\n",0,0,0,0,0,0)	;	
-		return ERROR ;
-	}	
-	logMsg("Serial port 3 success:  Motor Control Module\n",0,0,0,0,0,0)	;	
-	
+		logMsg("Serial port 3 failure: Motor Control Module\n", 0, 0, 0, 0, 0, 0);
+		return ERROR;
+	}
+	logMsg("Serial port 3 success:  Motor Control Module\n", 0, 0, 0, 0, 0, 0);
+
 	FOREVER
 	{
-		if ( err = ReadHoldingRegister(hCom, 1, 0, 40, MOT_VAL_ADR) )
-			{
-				SetInputReg(MOT_ERR_CODE_ADR, err) ;
-				SetInputRegInc(MOT_ERR_NUM_ADR) ;
-			}	
-			
-		taskDelay(5)	;
-									
-		/*---------------write data---------------*/
-		for(i = 0; i < 30; i++)
-		{			
-			if ( ParamsDef[i].ucChanged)
-				{
-					adr = ParamsDef[i].usAddress ;
-					err = WriteHoldingRegister(hCom, 1, adr, 1000 + i) ;
-					/*printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n,adr,val) ;*/
-					if ( err == MB_ENOERR )
-						ParamsDef[i].ucChanged = 0 ;	
-				}
-		}		
- 			
-		taskDelay(10)	;	
+		if (err = ReadHoldingRegister(hCom, 1, 0, 40, MOT_VAL_ADR))
+		{
+			SetInputReg(MOT_ERR_CODE_ADR, err);
+			SetInputRegInc(MOT_ERR_NUM_ADR);
+		}
 
+		taskDelay(5);
+
+		/*---------------write data---------------*/
+		for (i = 0; i < 30; i++)
+		{
+			if (ParamsDef[i].ucChanged)
+			{
+				adr = ParamsDef[i].usAddress;
+				err = WriteHoldingRegister(hCom, 1, adr, 1000 + i);
+				/*printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n,adr,val) ;*/
+				if (err == MB_ENOERR)
+					ParamsDef[i].ucChanged = 0;
+			}
+		}
+		taskDelay(10);
 	}
- 	
- 	return OK; 	
- }
- 
- 
- /*--------------end of file-------------------------------------*/
+
+	FOREVER
+	{
+		if (err = ReadHoldingRegister(hCom, 1, 0, 40, MOT_VAL_ADR))
+		{
+			SetInputReg(MOT_ERR_CODE_ADR, err);
+			SetInputRegInc(MOT_ERR_NUM_ADR) ;
+		}
+	}
+
+	return OK;
+}
+
+/*--------------end of file-------------------------------------*/
