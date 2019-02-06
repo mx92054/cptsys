@@ -2,7 +2,7 @@
 #
 
 
-# GENERATED: Thu Jan 31 17:11:28 中国标准时间 2019
+# GENERATED: Wed Feb 06 10:22:42 中国标准时间 2019
 # DO NOT EDIT - file is regenerated whenever the project changes
 
 
@@ -15,7 +15,7 @@ PRJ_DIR        = .
 endif
 PRJ_FILE       = cptsys.wpj
 PRJ_TYPE       = vxWorks
-PRJ_OBJS       = sysALib.o ns16550Siow2.o sysLib.o usrAppInit.o prjConfig.o linkSyms.o mb.o mbascii.o mbcrc.o mbfunccoils.o mbfuncdiag.o mbfuncdisc.o mbfuncholding.o mbfuncinput.o mbfuncother.o mbInterface.o mbtcp.o mbutils.o portevent.o portother.o porttcp.o modbus_rtu.o serialTask.o partreg.o base_queue.o sioDemo.o sioDemo.o record.o dai_ins.o task_com1.o task_com2.o task_com3.o task_com4.o task_com5.o
+PRJ_OBJS       = sysALib.o ns16550Siow2.o sysLib.o usrAppInit.o prjConfig.o linkSyms.o mb.o mbascii.o mbcrc.o mbfunccoils.o mbfuncdiag.o mbfuncdisc.o mbfuncholding.o mbfuncinput.o mbfuncother.o mbInterface.o mbtcp.o mbutils.o portevent.o portother.o porttcp.o modbus_rtu.o serialTask.o partreg.o base_queue.o sioDemo.o record.o dai_ins.o task_com1.o task_com2.o task_com3.o task_com4.o task_com5.o
 BOOT_OBJS      = romInit.o romStart.o $(BOOT_EXTRA)
 BUILD_SPEC     = default
 BSP_DIR        = $(WIND_BASE)/target/config/pcPentium_PM_CSYSH
@@ -420,9 +420,6 @@ base_queue.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/reg/base_queue.c
 
 sioDemo.o:
-	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/../SerialTest/sioDemo.c
-
-sioDemo.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/sioDemo.c
 
 record.o:
@@ -508,9 +505,6 @@ partreg.o:
 
 base_queue.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/reg/base_queue.c
-
-sioDemo.o:
-	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/../SerialTest/sioDemo.c
 
 sioDemo.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/sioDemo.c
@@ -600,9 +594,6 @@ base_queue.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/reg/base_queue.c
 
 sioDemo.o:
-	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/../SerialTest/sioDemo.c
-
-sioDemo.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/sioDemo.c
 
 record.o:
@@ -688,9 +679,6 @@ partreg.o:
 
 base_queue.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/reg/base_queue.c
-
-sioDemo.o:
-	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/../SerialTest/sioDemo.c
 
 sioDemo.o:
 	$(CC) -g -mcpu=pentium -march=pentium -ansi -nostdlib -fno-builtin -fno-defer-pop -I$(PRJ_DIR) -I$(WIND_BASE)/target/config/pcPentium_PM_CSYSH -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/config/comps/src -I$(WIND_BASE)/target/src/drv -DCPU=PENTIUM -DTOOL_FAMILY=gnu -DTOOL=gnu -DPRJ_BUILD  -c $(PRJ_DIR)/sioDemo.c
@@ -917,11 +905,6 @@ partreg.o: $(PRJ_DIR)/reg/partreg.c
 base_queue.o: $(PRJ_DIR)/reg/base_queue.c \
 	$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stddef.h \
 	$(PRJ_DIR)/reg/base_queue.h \
-	$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stdarg.h
-
-
-sioDemo.o: $(PRJ_DIR)/../SerialTest/sioDemo.c \
-	$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stddef.h \
 	$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stdarg.h
 
 

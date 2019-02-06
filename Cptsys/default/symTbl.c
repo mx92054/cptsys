@@ -2,7 +2,7 @@
 
 /* CREATED BY C:\Tornado2.2/host/src/hutils/makeSymTbl.tcl
  *  WITH ARGS pentium tmp.o symTbl.c
- *         ON Sun Feb 03 15:22:44 中国标准时间 2019
+ *         ON Wed Feb 06 10:22:54 中国标准时间 2019
  */
 
 #include "vxWorks.h"

@@ -24,7 +24,7 @@
 #include ".\reg\partreg.h"
 
 #define  	NUM_BOARD				20			/* 原位系统控制板数目*/
-#define 	MAX_COUNT				5				/* 最大通信故障尝试次数  */
+#define 	MAX_COUNT				5			/* 最大通信故障尝试次数  */
 
 #define DPT_FRAME_LEN 	90
 #define	DPT_TIMEOUT			3

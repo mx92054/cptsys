@@ -1788,23 +1788,6 @@ usrAppInit.o
 C/C++ compiler
 <END>
 
-<BEGIN> FILE_$(PRJ_DIR)/../SerialTest/sioDemo.c_dependDone
-TRUE
-<END>
-
-<BEGIN> FILE_$(PRJ_DIR)/../SerialTest/sioDemo.c_dependencies
-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stddef.h \
-	$(WIND_BASE)/host/$(WIND_HOST_TYPE)/lib/gcc-lib/i586-wrs-vxworks/2.9-PentiumIII-010221/include/stdarg.h
-<END>
-
-<BEGIN> FILE_$(PRJ_DIR)/../SerialTest/sioDemo.c_objects
-sioDemo.o
-<END>
-
-<BEGIN> FILE_$(PRJ_DIR)/../SerialTest/sioDemo.c_tool
-C/C++ compiler
-<END>
-
 <BEGIN> PROJECT_FILES
 $(WIND_BASE)/target/config/pcPentium_PM_CSYSH/sysALib.s \
 	$(WIND_BASE)/target/config/pcPentium_PM_CSYSH/ns16550Siow2.c \
@@ -1833,7 +1816,6 @@ $(WIND_BASE)/target/config/pcPentium_PM_CSYSH/sysALib.s \
 	$(PRJ_DIR)/serialTask.c \
 	$(PRJ_DIR)/reg/partreg.c \
 	$(PRJ_DIR)/reg/base_queue.c \
-	$(PRJ_DIR)/../SerialTest/sioDemo.c \
 	$(PRJ_DIR)/sioDemo.c \
 	$(PRJ_DIR)/record.c \
 	$(PRJ_DIR)/dai_ins.c \

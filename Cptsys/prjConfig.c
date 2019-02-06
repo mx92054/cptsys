@@ -2,7 +2,7 @@
 
 
 /*
-GENERATED: Fri Feb 01 15:32:18 中国标准时间 2019
+GENERATED: Wed Feb 06 10:22:44 中国标准时间 2019
 DO NOT EDIT - file is regenerated whenever the project changes.
 This file contains the non-BSP system initialization code
 for Create a bootable VxWorks image (custom configured).
