@@ -1,0 +1,23 @@
+cd 	 "path"							Set current working path
+pwd											Print working path
+ls 		["wpat"[, long]]	List contents of directory
+ll    ["wpat"]					List contents of directory - long format
+lsr		["wpat"[, long]]	Rescuresive list of directory contents
+llr		["wpat"]					Rescuresive detailed list of directory
+rename	"old" "new"			Change name of file
+copy	["in"][, "out"]		Copy in file to out file(0 = std in/out)
+cp		"wpat", "dst"			Copy many file sto another dir
+xcopy	"wpat", "dst"			Rescursively copy files
+mv		"wpat", "dst"			Move files int o antohter directory
+xdelete	"wpat"					Delete a file, wildcard list or tree
+attrib	"path","attr"		Modify file attributes
+xattrib "wpat", "attr"	Recursively modify file attributes
+chkdsk	"device",L,V		Consistency check of file system
+diskInit	"device"			Initialize file system on disk
+diskFormat "device"			Low level file system disk format
+
+
+attr contains one or more of :"+ - A H S R" characters
+"wpat" my be name of a file, directory or wildcard pattern 
+in which case "dst" must be a directory name
+chkdsk() params: L=0, check only, L=2, check and fix, V=0x200 verbose
