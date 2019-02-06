@@ -15,21 +15,19 @@
 #ifndef __DAI_MODULE_H__
 #define __DAI_MODULE_H__
 
-#define	INS_FRAME_LEN		40
-#define INS_TIMEOUT			3
+#define INS_FRAME_LEN 40
+#define INS_TIMEOUT 3
 
-
-#define DPT_FRAME_LEN 	90
-#define	DPT_TIMEOUT			3
-
+#define DPT_FRAME_LEN 90
+#define DPT_TIMEOUT 3
 
 /* 读绝缘检测数据 */
-eMBErrorCode	ReadInsMeter(int hCom, USHORT nAddr) ;
+eMBErrorCode ReadInsMeter(int hCom, USHORT nAddr);
 
 /* 读高度计数据 */
-eMBErrorCode	ReadAliMeter(int hCom, USHORT nAddr);
+eMBErrorCode ReadAliMeter(int hCom, USHORT nAddr);
 
 /* 读深度计数据 */
-eMBErrorCode ReadMeter(int hCom, USHORT nAddr) ;
+eMBErrorCode ReadMeter(int hCom, USHORT nAddr);
 
 #endif

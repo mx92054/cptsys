@@ -21,10 +21,9 @@
 #include "task_com3.h"
 #include ".\reg\partreg.h"
 
-/*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 COM2 and Motor Control Module
-		@param:		None
-		@retval:	None
+	@param:		None
+	@retval:	None
 -----------------------------------------------------------------*/
 STATUS Task_com3(void)
 {
@@ -55,14 +54,13 @@ STATUS Task_com3(void)
 			{
 				adr = ParamsDef[i].usAddress;
 				err = WriteHoldingRegister(hCom, 1, adr, 1000 + i);
-				printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n,adr,val) ;
+				printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n, adr, val);
 				if (err == MB_ENOERR)
 					ParamsDef[i].ucChanged = 0;
 			}
 		}
 		taskDelay(10);
 	}
-
 	return OK;
 }
 
