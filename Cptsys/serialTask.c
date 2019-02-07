@@ -36,42 +36,39 @@ USHORT usModuleStatus[NUM_BOARD]; /*communication status of per module*/
 
 int hSerHandle[NUM_SERIAL_PORT]; /* handle of serial port*/
 int nBaudrate[NUM_SERIAL_PORT] = {384, 384, 384, 1152, 1152, 1152};
-int nPort2Module[NUM_SERIAL_PORT + 1] = {0, 1, 2, 5, 9, 14, 15};
+int nPort2Module[NUM_SERIAL_PORT + 1] = {0, 1, 2, 5, 6, 11, 12};
 
 /*--------------------串口号 站地址 变量长度 协议类型 内存地址-----------------*/
 moduleDef boardDef[] = {
 	{0, 1, 2, 0, 0}, /*0  备用*/
-					 /*---------------------------------------------------------------COM0*/
+	/*-----------------------------------COM0*/
 
 	{1, 1, 2, 4, 30}, /*1  绝缘检测板 */
-					  /*---------------------------------------------------------------COM1*/
+	/*--------------------------------------COM1*/
 
 	{2, 0x61, 10, 2, 0},  /*2  1#DCDC转换模块*/
 	{2, 0x62, 10, 2, 10}, /*3  2#DCDC转换模块*/
 	{2, 0x63, 10, 2, 20}, /*4  3#DCDC转换模块*/
-						  /*---------------------------------------------------------------COM2*/
+	/*--------------------------------------COM2*/
 
-	{3, 1, 40, 1, 100}, /*5  1电机控制模块*/
-	{3, 2, 40, 1, 120}, /*6  2电机控制模块*/
-	{3, 3, 40, 1, 140}, /*7  3电机控制模块*/
-	{3, 4, 40, 1, 160}, /*8  姿态控制模块*/
-						/*---------------------------------------------------------------COM3*/
+	{3, 1, 40, 1, 100}, /*5  电机控制模块*/
+	/*--------------------------------------COM3*/
 
-	{4, 1, 23, 1, 200}, /*9 1#DIO模块*/
-	{4, 2, 23, 1, 230}, /*10 2#DIO模块*/
-	{4, 3, 10, 1, 260}, /*11 温度检测模块*/
-	{4, 4, 10, 1, 270}, /*12 漏水检测模块*/
-	{4, 5, 10, 1, 280}, /*13 控制罐开关模块*/
-						/*---------------------------------------------------------------COM4*/
+	{4, 1, 23, 1, 200}, /*6 1#DIO模块*/
+	{4, 2, 23, 1, 230}, /*7 2#DIO模块*/
+	{4, 3, 10, 1, 260}, /*8 温度检测模块*/
+	{4, 4, 10, 1, 270}, /*9 漏水检测模块*/
+	{4, 5, 10, 1, 280}, /*10 控制罐开关模块*/
+	/*--------------------------------------COM4*/
 
-	{5, 1, 120, 1, 300}, /*14 多串口板 */
-						 /*---------------------------------------------------------------COM5*/
+	{5, 1, 120, 1, 300}, /*11 多串口板 */
+						 /*-------------------------------------COM5*/
 };
 
 /*-----------------------function define ------------------------*/
 /* 	@desc: communciation task bewteen PC104 and control board
-		@param:		None
-		@retval:	None
+	@param:		None
+	@retval:	None
 -----------------------------------------------------------------*/
 STATUS task_board(void)
 {
@@ -88,7 +85,7 @@ STATUS task_board(void)
 
 		serialONOFF(); /*  根据指令打开或关闭相应的串口   	*/
 
-		for (i = 0; i < 19; i++)
+		for (i = 0; i < 14; i++)
 		{
 			switch (boardDef[i].ucType)
 			{
@@ -156,12 +153,12 @@ STATUS task_board(void)
 /*---------------------------------------------------------------------
 @desc: -communicate with modbus module
 @param: nSer -  serial port
-				nModule - module number
-				nStat - station address
-				nStartAdr - start address of module
-				nLen - register length 
-				RegAdr - register address
-@retval:	None
+		nModule - module number
+		nStat - station address
+		nStartAdr - start address of module
+		nLen - register length 
+		RegAdr - register address
+@retval:None
 ------------------------------------------------------------------------*/
 void Com_MBModule(int nSer, USHORT nModule, USHORT nStat, USHORT nStartAdr, USHORT nLen, USHORT RegAdr)
 {
