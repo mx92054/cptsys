@@ -11,6 +11,7 @@
 #define VXDEBUG 1
 
 int mb_err = 0;
+int mb_slt = 0;
 
 SEM_ID serialSEM;
 
@@ -99,12 +100,14 @@ BOOL prvbMBPortSerialRead(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes, USHO
 	tv.tv_usec = 1000;
 	FD_ZERO(&rfds);
 	FD_SET(iSerialFd, &rfds);
-	sres = select(iSerialFd + 1, &rfds, NULL, NULL, &tv);
-	if (sres > 0)
+	mb_slt = select(iSerialFd + 1, &rfds, NULL, NULL, &tv);
+	if (mb_slt > 0)
 	{
 		if (FD_ISSET(iSerialFd, &rfds))
 		{
+			semTake(serialSEM, WAIT_FOREVER);
 			res = read(iSerialFd, pucBuffer, usNBytes);
+			semGive(serialSEM);
 			if (res > 0)
 			{
 				*usNBytesRead = (USHORT)res;
@@ -114,34 +117,9 @@ BOOL prvbMBPortSerialRead(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes, USHO
 	}
 
 	if (mb_err)
-		printf("Select : %d, read: %d len:%d\n", sres, res, usNBytes);
+		printf("Select : %d, read: %d len:%d\n", mb_slt, res, usNBytes);
 	return bResult;
 }
-
-/*--------------------------------------------------------------------------------------------------
-BOOL	prvbMBPortSerialWrite(int iSerialFd,  UCHAR * pucBuffer, USHORT usNBytes) 
-{
-    ssize_t         res;
-    size_t          left = ( size_t ) usNBytes;
-    size_t          done = 0;
-
-    while( left > 0 )
-    {
-        if( ( res = write( iSerialFd, pucBuffer + done, left ) ) == -1 )
-        {
-            if( errno != EINTR )
-            {
-                break;
-            }
-            /* call write again because of interrupted system call. 
-            continue;
-        }
-        done += res;
-        left -= res;
-    }
-    
-  	return left == 0 ? TRUE : FALSE;	
-} */
 
 /************************************************************************
  * 向串口通道写数据,
@@ -166,7 +144,9 @@ BOOL prvbMBPortSerialWrite(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes)
 	{
 		if (FD_ISSET(iSerialFd, &writeFds))
 		{
+			semTake(serialSEM, WAIT_FOREVER);
 			nwritten = write(iSerialFd, pucBuffer, usNBytes);
+			semGive(serialSEM);
 			if (nwritten == usNBytes)
 				return TRUE;
 		}
@@ -245,7 +225,7 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 	/*------------------Handle Frame--------------------------------------*/
 	if (usCounter >= 5)
 	{
-		printf("Read Hold Reg: Adr:%d, Len:%d, Fact:%d/%dbyte(%d) \n", usAddress, usLen, usBytesCur, usFrameLen, usCounter);
+		printf("Read Hold Reg: Select:%d, Len:%d, Fact:%d/%dbyte(%d) \n", mb_slt, usLen, usBytesCur, usFrameLen, usCounter);
 		mb_err = 1;
 		for (i = 0; i < usBytesCur; i++)
 		{
@@ -253,7 +233,7 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 			if (i % 10 == 9)
 				printf("\n");
 		}
-		if (usBytesCur % 10 != 9)
+		if (usBytesCur % 10 != 9 && usBytesCur > 0)
 			printf("\n");
 		return MB_ERECEIVE;
 	}

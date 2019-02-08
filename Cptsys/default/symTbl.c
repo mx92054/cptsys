@@ -2,7 +2,7 @@
 
 /* CREATED BY C:\Tornado2.2/host/src/hutils/makeSymTbl.tcl
  *  WITH ARGS pentium tmp.o symTbl.c
- *         ON Fri Feb 08 16:30:07 中国标准时间 2019
+ *         ON Fri Feb 08 17:18:45 中国标准时间 2019
  */
 
 #include "vxWorks.h"
@@ -1741,6 +1741,7 @@ IMPORT int max_keylen;
 IMPORT int max_linkhdr;
 IMPORT int max_protohdr;
 IMPORT int mb_err;
+IMPORT int mb_slt;
 IMPORT int mbinit ();
 IMPORT int mblen ();
 IMPORT int mbstowcs ();
@@ -3530,7 +3531,7 @@ IMPORT int yyv;
 IMPORT int yyval;
 IMPORT int zeroin_addr;
 
-SYMBOL standTbl [3521] =
+SYMBOL standTbl [3522] =
     {
         {{NULL}, "ClearQueue", (char*) ClearQueue, 0, SYM_GLOBAL | SYM_TEXT},
         {{NULL}, "Com_Altimeter", (char*) Com_Altimeter, 0, SYM_GLOBAL | SYM_TEXT},
@@ -5265,6 +5266,7 @@ SYMBOL standTbl [3521] =
         {{NULL}, "max_linkhdr", (char*) &max_linkhdr, 0, SYM_GLOBAL | SYM_BSS},
         {{NULL}, "max_protohdr", (char*) &max_protohdr, 0, SYM_GLOBAL | SYM_BSS},
         {{NULL}, "mb_err", (char*) &mb_err, 0, SYM_GLOBAL | SYM_DATA},
+        {{NULL}, "mb_slt", (char*) &mb_slt, 0, SYM_GLOBAL | SYM_DATA},
         {{NULL}, "mbinit", (char*) mbinit, 0, SYM_GLOBAL | SYM_TEXT},
         {{NULL}, "mblen", (char*) mblen, 0, SYM_GLOBAL | SYM_TEXT},
         {{NULL}, "mbstowcs", (char*) mbstowcs, 0, SYM_GLOBAL | SYM_TEXT},
@@ -7056,4 +7058,4 @@ SYMBOL standTbl [3521] =
     };
 
 
-ULONG standTblSize = 3521;
+ULONG standTblSize = 3522;

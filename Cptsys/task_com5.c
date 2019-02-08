@@ -50,7 +50,6 @@ STATUS Task_com5(void)
 		}
 
 		taskDelay(5);
-
 		/*---------------write data---------------*/
 		for (i = 60; i < 80; i++)
 		{

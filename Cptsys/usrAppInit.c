@@ -36,7 +36,6 @@ Initialize user application code.
 #include "task_com4.h"
 #include "task_com5.h"
 
-
 #include "record.h"
 #include "md_rtu\modbus_rtu.h"
 #include "reg\base_queue.h"
@@ -49,7 +48,8 @@ extern USHORT usRegInputBuf[] ;
 
 
 int serialErrCount = 0 ;
-int serialTotalCount = 0 ; 
+int serialTotalCount = 0 ;
+ 
 
 STATUS powerb() ;
 
@@ -64,7 +64,7 @@ void usrAppInit (void)
 		printf("\nInitial modbus-tcp procotol success!\n") ;	
 		
 		biostime() ;
-		printf("\n Initial system real time...") ;
+		printf("Initial system real time...\n") ;
 		
 		SerialInit() ;
 	/*
@@ -122,3 +122,4 @@ STATUS testqueue()
 		
 	return OK ;
 }
+/*-----------------------end of file--------------------------------*/

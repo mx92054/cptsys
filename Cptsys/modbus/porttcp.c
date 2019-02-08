@@ -62,8 +62,8 @@
 /* ----------------------- Defines  -----------------------------------------*/
 #define MB_TCP_DEFAULT_PORT 502 	/* TCP listening port. */
 #define MB_TCP_POOL_TIMEOUT 50  	/* pool timeout for event waiting. */
-#define MB_TCP_READ_TIMEOUT 1000  /* Maximum timeout to wait for packets. */
-#define MB_TCP_READ_CYCLE   100 	/* Time between checking for new data. */
+#define MB_TCP_READ_TIMEOUT 100  /* Maximum timeout to wait for packets. */
+#define MB_TCP_READ_CYCLE   10 	/* Time between checking for new data. */
 
 #define MB_TCP_DEBUG        1   /* Set to 1 for additional debug output. */
 

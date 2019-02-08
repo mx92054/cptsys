@@ -57,3 +57,4 @@ void write_log(slog_level level, int print_stacktrace, const char *func_name, in
  
  
 #endif
+/*-----------------------end of file--------------------------------*/
