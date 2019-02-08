@@ -55,7 +55,7 @@ STATUS Task_com3(void)
 			{
 				adr = ParamsDef[i].usAddress;
 				err = WriteHoldingRegister(hCom, 1, adr, 1000 + i);
-				printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n, adr, val);
+				/*printf(" Com3 Modbus stat:%d, adr:%d, val:%d\n", n, adr, val);*/
 				if (err == MB_ENOERR)
 					ParamsDef[i].ucChanged = 0;
 			}
