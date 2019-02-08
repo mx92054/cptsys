@@ -151,55 +151,28 @@ BOOL	prvbMBPortSerialWrite(int iSerialFd,  UCHAR * pucBuffer, USHORT usNBytes)
  ************************************************************************/
 BOOL prvbMBPortSerialWrite(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes)
 {
-	USHORT nwritten;
-
-	ioctl(iSerialFd, FIOFLUSH, 0);
-	nwritten = write(iSerialFd, pucBuffer, usNBytes);
-
-	return nwritten == usNBytes ? TRUE : FALSE;
-
-	/*	
 	struct fd_set writeFds;
 	struct timeval timeval;
 	int ret;
-
-	USHORT nleft;
 	USHORT nwritten;
-	UCHAR *ptr;
 
-	timeval.tv_sec = 	0;
-	timeval.tv_usec = 10000;
+	timeval.tv_sec = 0;
+	timeval.tv_usec = 1000;
 
-	ptr = (UCHAR *)pucBuffer;
-	nleft = usNBytes ;
-
-	while (nleft > 0)
+	FD_ZERO(&writeFds);
+	FD_SET(iSerialFd, &writeFds);
+	ret = select(iSerialFd + 1, 0, &writeFds, 0, &timeval);
+	if (ret > 0)
 	{
-	        FD_ZERO(&writeFds);
-	        FD_SET(iSerialFd, &writeFds); 
-	        ret = select(iSerialFd + 1, 0, &writeFds, 0, &timeval);
-	        if (ret == 0)
-	        {
-	                return (FALSE);
-	        }
-	        if (FD_ISSET(iSerialFd, &writeFds))
-	        {
-		        		semTake(serialSEM, WAIT_FOREVER) ;
-		        		nwritten = write(iSerialFd, ptr, nleft) ;
-		        		semGive(serialSEM) ;
-			          if (nwritten  <= 0)
-	                {
-	                        if (errno == EINTR)
-	                                nwritten = 0;
-	                        else
-	                                return FALSE;
-	                }
-	                nleft -= nwritten;
-	                ptr += nwritten;
-	        }
+		if (FD_ISSET(iSerialFd, &writeFds))
+		{
+			nwritten = write(iSerialFd, pucBuffer, usNBytes);
+			if (nwritten == usNBytes)
+				return TRUE;
+		}
 	}
 
-	return  TRUE;*/
+	return FALSE;
 }
 
 /*--------------------------------------------------------------------------------------------------
@@ -346,7 +319,7 @@ WriteHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT cu
 	ucFrame[3] = (UCHAR)(usAddress & 0x00FF);
 
 	ptr = ucFrame + 4;
-	i = GetHoldingReg(curAddr) ;
+	i = GetHoldingReg(curAddr);
 	ucFrame[4] = (UCHAR)(i >> 8);
 	ucFrame[5] = (UCHAR)(i & 0x00FF);
 
