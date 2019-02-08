@@ -47,7 +47,7 @@ BOOL xMBPortSerialInit(UCHAR ucPort, ULONG ulBaudRate, int *pvSerialFd)
 	O_NONBLOCK:	设置为非阻塞模式
 	*/
 
-	if ((iSerialFd = open(szDevice, O_RDWR | O_NOCTTY | O_NDELAY, 0)) < 0)
+	if ((iSerialFd = open(szDevice, O_RDWR | O_NOCTTY | O_NONBLOCK, 0)) < 0)
 	{
 		logMsg("xMBPortSerialInit: Can't open serial port %s: %s\n", szDevice, strerror(errno), 0, 0, 0, 0);
 		return FALSE;
