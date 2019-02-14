@@ -48,7 +48,7 @@ BOOL xMBPortSerialInit(UCHAR ucPort, ULONG ulBaudRate, int *pvSerialFd)
 	O_NONBLOCK:	设置为非阻塞模式
 	*/
 
-	if ((iSerialFd = open(szDevice, O_RDWR | O_NOCTTY | O_NONBLOCK, 0)) < 0)
+	if ((iSerialFd = open(szDevice, O_RDWR | O_NOCTTY | O_NDELAY, 0)) < 0)
 	{
 		logMsg("xMBPortSerialInit: Can't open serial port %s: %s\n", szDevice, strerror(errno), 0, 0, 0, 0);
 		return FALSE;
@@ -118,6 +118,7 @@ BOOL prvbMBPortSerialRead(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes, USHO
 
 	if (mb_err)
 		printf("Select : %d, read: %d len:%d\n", sres, res, usNBytes);
+
 	return bResult;
 }
 
@@ -158,13 +159,13 @@ BOOL prvbMBPortSerialWrite(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes)
 /*--------------------------------------------------------------------------------------------------
   函数名称：读多个保持继电器
   输入参数：
-  				iSerialFd: 	读写串口地址
-  				ucStation: 	读写站地址
-  				usAddress: 	读写寄存器地址
-  				usLen:			读写寄存器长度
-  				curAddr:		读取到的数据保存到本地寄存器的地址
+	iSerialFd: 	读写串口地址
+	ucStation: 	读写站地址
+	usAddress: 	读写寄存器地址
+	usLen:			读写寄存器长度
+	curAddr:		读取到的数据保存到本地寄存器的地址
   返回参数：
-  				读取成功返回E_NOERROR，否则返回错误代码
+  	读取成功返回E_NOERROR，否则返回错误代码
 ---------------------------------------------------------------------------------------------------*/
 eMBErrorCode
 ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usLen, USHORT curAddr)
