@@ -100,8 +100,8 @@ BOOL prvbMBPortSerialRead(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes, USHO
 	tv.tv_usec = 1000;
 	FD_ZERO(&rfds);
 	FD_SET(iSerialFd, &rfds);
-	mb_slt = select(iSerialFd + 1, &rfds, NULL, NULL, &tv);
-	if (mb_slt > 0)
+	sres = select(iSerialFd + 1, &rfds, NULL, NULL, &tv);
+	if (sres > 0)
 	{
 		if (FD_ISSET(iSerialFd, &rfds))
 		{
@@ -117,7 +117,7 @@ BOOL prvbMBPortSerialRead(int iSerialFd, UCHAR *pucBuffer, USHORT usNBytes, USHO
 	}
 
 	if (mb_err)
-		printf("Select : %d, read: %d len:%d\n", mb_slt, res, usNBytes);
+		printf("Select : %d, read: %d len:%d\n", sres, res, usNBytes);
 	return bResult;
 }
 
@@ -225,7 +225,7 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 	/*------------------Handle Frame--------------------------------------*/
 	if (usCounter >= 5)
 	{
-		printf("Read Hold Reg: Select:%d, Len:%d, Fact:%d/%dbyte(%d) \n", mb_slt, usLen, usBytesCur, usFrameLen, usCounter);
+		printf("Read Hold Reg  Stat:%d, Len:%d, Byte:%d/%d(%d) \n", ucStation, usLen, usBytesCur, usFrameLen, usCounter);
 		mb_err = 1;
 		for (i = 0; i < usBytesCur; i++)
 		{
