@@ -194,24 +194,18 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 
 	/*------------------Transmitter Frame--------------------------------------*/
 	/*ioctl(iSerialFd, FIOFLUSH, 0) ; */
-	do
+	while (!prvbMBPortSerialWrite(iSerialFd, ucFrame, 8) && (usCounter++ < 3))
 	{
-		if (prvbMBPortSerialWrite(iSerialFd, ucFrame, 8))
-			break;
 		taskDelay(2);
-	} while (usCounter++ < 3);
-
-	if (usCounter >= 3)
-	{
-		return MB_ETRANSMITTER;
 	}
+	if (usCounter >= 3)
+		return MB_ETRANSMITTER;
 
 	/*------------------Receive Frame-----------------------------------------*/
 	usFrameLen = 5 + 2 * usLen;
 	usBytesLen = usFrameLen;
 	usBytesCur = 0;
 	usCounter = 0;
-
 	do
 	{
 		taskDelay(5);
@@ -220,7 +214,6 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 			usBytesCur += usNBytesRead;
 			usBytesLen -= usNBytesRead;
 		}
-
 	} while (usCounter++ < 5 && usBytesCur < usFrameLen);
 
 	/*------------------Handle Frame--------------------------------------*/
@@ -228,14 +221,6 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 	{
 		printf("Read Hold Reg  Stat:%d, Len:%d, Byte:%d/%d(%d) \n", ucStation, usLen, usBytesCur, usFrameLen, usCounter);
 		mb_err = 1;
-		for (i = 0; i < usBytesCur; i++)
-		{
-			printf("%02X ", ucFrame[i]);
-			if (i % 10 == 9)
-				printf("\n");
-		}
-		if (usBytesCur % 10 != 9 && usBytesCur > 0)
-			printf("\n");
 		return MB_ERECEIVE;
 	}
 
@@ -244,13 +229,6 @@ ReadHoldingRegister(int iSerialFd, UCHAR ucStation, USHORT usAddress, USHORT usL
 	if (ucFrame[0] != ucStation || ucFrame[1] != MB_FUNC_READ_HOLDING_REGISTER)
 	{
 		printf("ReadHoldingRegister: frame error. \n");
-		for (i = 0; i < usBytesCur; i++)
-		{
-			printf("%02X ", ucFrame[i]);
-			if (i % 10 == 9)
-				printf("\n");
-		}
-		printf("\n");
 		return MB_EIO;
 	}
 
